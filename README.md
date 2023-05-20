@@ -48,6 +48,7 @@ The last step in my data cleaning process was to create a categorical variable f
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]     |         6 |               9 |  29782           |      306168 | 2008-12-31 |          5 |            5 |      194.8 | False             | 3.0-5.0                  |
 | millionaire pound cake               | 286009 |       120 |           461724 | 2008-02-12  | [878.3, 63.0, 326.0, 13.0, 20.0, 123.0, 39.0] |         7 |               7 | 813055           |      286009 | 2008-04-09 |          5 |            5 |      878.3 | False             | 3.0-5.0                  |
 | 2000 meatloaf                        | 475785 |        90 |          2202916 | 2012-03-06  | [267.0, 30.0, 12.0, 12.0, 29.0, 48.0, 2.0]    |        17 |              13 |      2.20436e+06 |      475785 | 2012-03-07 |          5 |            5 |      267   | False             | 3.0-5.0                  |
+
 ### Univariate Analysis
 <iframe src="assets/calories-dist.html" width=1000 height=600 frameBorder=0></iframe>
 
@@ -64,6 +65,7 @@ This plot shows the distribution of calories by rating group, visualized as boxp
 |:-------------------------|-------:|----------:|-----------------:|----------:|----------------:|------------:|------------:|-----------:|-------------:|-----------:|------------------:|
 | 1.0-2.9                  | 389379 |   96.9893 |      2.91427e+07 |   10.5306 |         9.11309 | 3.33548e+08 |      389379 |    1.68134 |      1.64404 |    424.777 |         0.0469417 |
 | 3.0-5.0                  | 380570 |  111.442  |      1.28254e+07 |   10.0361 |         9.20381 | 6.73688e+07 |      380570 |    4.70419 |      4.67806 |    407.263 |         0.0164895 | 
+
 This DataFrame is the result of grouping recipes by rating category and taking the mean of the numeric columns. The main columns of interest in this resulting table are 'calories' and 'ratings_missing'. The 'calories' column shows the center of each rating group, with the 3.0-5.0 group having about 18 more average calories. The 'ratings_missing' column shows the percentage of each group missing a rating.
 
 ---
