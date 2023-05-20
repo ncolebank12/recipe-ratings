@@ -1,8 +1,3 @@
-# Do Higher Calories Result in Higher Ratings?
-
-a project by Nic Colebank (ncoleban@ucsd.ed)
-
----
 
 ## Introduction
 
@@ -11,8 +6,6 @@ This project is investigating a recipes dataset from food.com. The data originat
 I was specifically interested in how the number of calories related to the average rating of a recipe. It is often thought that the more calories, the better the food tastes (although definitely not always the case). As a result of this, I decided my research question would be: Do recipes with an average rating of 3+ tend to have more calories than recipes that do not?
 
 The main columns of interest for this question are 'nutrition' and 'avg_rating' (which is derived from 'rating'). The nutrition column contains nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]. The rating column is the rating given for a recipe by a user, and avg_rating is the average of all ratings given for a given recipe.
-
----
 
 ## Cleaning and EDA
 
@@ -38,6 +31,7 @@ The last step in my data cleaning process was to create a categorical variable f
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 |               9 |  29782           |      306168 | 2008-12-31 |          5 |            5 |      194.8 | False             |
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 |               9 |      1.19628e+06 |      306168 | 2009-04-13 |          5 |            5 |      194.8 | False             |
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 |               9 | 768828           |      306168 | 2013-08-02 |          5 |            5 |      194.8 | False             |
+
 
 **Head of unique_recipes**
 
@@ -68,7 +62,7 @@ This plot shows the distribution of calories by rating group, visualized as boxp
 
 This DataFrame is the result of grouping recipes by rating category and taking the mean of the numeric columns. The main columns of interest in this resulting table are 'calories' and 'ratings_missing'. The 'calories' column shows the center of each rating group, with the 3.0-5.0 group having about 18 more average calories. The 'ratings_missing' column shows the percentage of each group missing a rating.
 
----
+
 
 ## Assessment of Missingness
 
@@ -92,13 +86,14 @@ The permutation test for missingness on minutes had a p-value of 0.116, meaning 
 
 The permutation test for missingness of 'ratings' on 'calories' had a p-value of 0.0, meaning that 'rating' like does depend on 'calories'. This poses a problem for my research question, as I am looking at the relationship between 'calories' and a column derived from 'rating'. Probabilistic imputation would ideally be the best solution to this, but since 'calories' is not a categorical column, it cannot be done. Instead, rows with a missing value for 'avg_rating' will not be factored into the hypothesis testing, which will put an asterik on the results of the testing.
 
----
+
 
 ## Hypothesis Testing
 
 My hypotheses are as follows:
 
 Null Hypothesis - The median number of calories of recipes with an average rating of 3+ is the same as ther median number of calories of recipes with an average rating of 1.0-2.9.
+
 Alternative Hypothesis - The median number of calories of recipes with an average rating of 3+ is greater than the median number of calories of all recipes.
 
 Since my alternative hypothesis is looking to see if the median number is greater, I will be using the signed difference in medians between the two rating groups as my test statistic.
