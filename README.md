@@ -71,9 +71,9 @@ In the original merged DataFrame, there are three columns with missing values: '
 ### NMAR Analysis
 When looking if any of the columns with missing values are NMAR, none of the columns, except 'review', qualify as so. The value of the 'description' column cannot be determined by looking at other columns, but there is no reason for the missingness to depend on the actual description values. It ultimately depends on the user deciding whether or not to create a description, which is not tracked by other columns in the dataset. 
 
-For the 'rating' column, it would make sense for more neutral ratings to be missing, since people tend to review things they have a strong opinion about. However, there are many reviews without a rating, which goes against this idea. 
+For the 'rating' column, it would make sense for more neutral ratings to be missing, since people tend to rate and review things they have a strong opinion about. However, there are many reviews without a rating, which goes against this idea since writing a review takes more effort than leaving just a rating. 
 
-The 'review' column most likely NMAR, as more neutral reviews would be more likely to be missing. Recording the satisfaction level of users that tried the recipe would be able to explain the missingness in this scenario.
+The 'review' column is most likely NMAR, as more neutral reviews would be more likely to be missing. Recording the satisfaction level of users that tried the recipe would be able to explain the missingness in this scenario.
 
 
 ### Missingness Dependency
@@ -84,7 +84,7 @@ The permutation test for missingness on minutes had a p-value of 0.116, meaning 
 
 <iframe src="assets/diffs-plot.html" width=1000 height=600 frameBorder=0></iframe>
 
-The permutation test for missingness of 'ratings' on 'calories' had a p-value of 0.0, meaning that 'rating' like does depend on 'calories'. This poses a problem for my research question, as I am looking at the relationship between 'calories' and a column derived from 'rating'. Probabilistic imputation would ideally be the best solution to this, but since 'calories' is not a categorical column, it cannot be done. Instead, rows with a missing value for 'avg_rating' will not be factored into the hypothesis testing, which will put an asterik on the results of the testing.
+The permutation test for missingness of 'ratings' on 'calories' had a p-value of 0.0, meaning that 'rating' likely does depend on 'calories'. This poses a problem for my research question, as I am looking at the relationship between 'calories' and a column derived from 'rating'. Probabilistic imputation would ideally be the best solution to this, but since 'calories' is not a categorical column, it cannot be done. Instead, rows with a missing value for 'avg_rating' will not be factored into the hypothesis testing, which will put an asterik on the results of the testing.
 
 
 
@@ -96,6 +96,6 @@ Null Hypothesis - The median number of calories of recipes with an average ratin
 
 Alternative Hypothesis - The median number of calories of recipes with an average rating of 3+ is greater than the median number of calories of all recipes.
 
-Since my alternative hypothesis is looking to see if the median number is greater, I will be using the signed difference in medians between the two rating groups as my test statistic.
+Since my alternative hypothesis is looking to see if the median number is greater, I will be using the signed difference in medians between the two rating groups as my test statistic. The median is a good measure of center, and there seems to be some outliers in the data that would skew the mean, even after filtering out recipes with more than 5000 calories.
 
 After generating 1000 test statistics from doing permutations, the resulting p-value is 0.139. With a 5% significance level, this p-value is not enough to reject the null hypothesis, suggesting that the median calories is generally the same between recipes with an average rating of 1.0-2.9 and recipes with an average rating of 3.0-5.0.
