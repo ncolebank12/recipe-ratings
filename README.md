@@ -30,6 +30,7 @@ I created a second DataFrame called unique_recipes that drops all rows with a du
 The last step in my data cleaning process was to create a categorical variable from the average_rating column. This would be used to group the data into recipes that have an average rating between 1.0-2.9 and a group with average ratings between 3.0-5.0. 
 
 **Head of cleaned recipes DataFrame**
+
 | name                                 |     id |   minutes |   contributor_id | submitted   | nutrition                                    |   n_steps |   n_ingredients |          user_id |   recipe_id | date       |   rating_x |   avg_rating |   calories | ratings_missing   |
 |:-------------------------------------|-------:|----------:|-----------------:|:------------|:---------------------------------------------|----------:|----------------:|-----------------:|------------:|:-----------|-----------:|-------------:|-----------:|:------------------|
 | 1 brownies in the world    best ever | 333281 |        40 |           985201 | 2008-10-27  | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]     |        10 |               9 | 386585           |      333281 | 2008-11-19 |          4 |            4 |      138.4 | False             |
@@ -39,6 +40,7 @@ The last step in my data cleaning process was to create a categorical variable f
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 |               9 | 768828           |      306168 | 2013-08-02 |          5 |            5 |      194.8 | False             |
 
 **Head of unique_recipes**
+
 | name                                 |     id |   minutes |   contributor_id | submitted   | nutrition                                     |   n_steps |   n_ingredients |          user_id |   recipe_id | date       |   rating_x |   avg_rating |   calories | ratings_missing   | avg_rating_categorized   |
 |:-------------------------------------|-------:|----------:|-----------------:|:------------|:----------------------------------------------|----------:|----------------:|-----------------:|------------:|:-----------|-----------:|-------------:|-----------:|:------------------|:-------------------------|
 | 1 brownies in the world    best ever | 333281 |        40 |           985201 | 2008-10-27  | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]      |        10 |               9 | 386585           |      333281 | 2008-11-19 |          4 |            4 |      138.4 | False             | 3.0-5.0                  |
@@ -57,6 +59,7 @@ This plot shows the distribution of calories by rating group, visualized as boxp
 
 
 ### Interesting Aggregates
+
 | avg_rating_categorized   |     id |   minutes |   contributor_id |   n_steps |   n_ingredients |     user_id |   recipe_id |   rating_x |   avg_rating |   calories |   ratings_missing |
 |:-------------------------|-------:|----------:|-----------------:|----------:|----------------:|------------:|------------:|-----------:|-------------:|-----------:|------------------:|
 | 1.0-2.9                  | 389379 |   96.9893 |      2.91427e+07 |   10.5306 |         9.11309 | 3.33548e+08 |      389379 |    1.68134 |      1.64404 |    424.777 |         0.0469417 |
