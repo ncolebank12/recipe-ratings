@@ -44,15 +44,42 @@ The last step in my data cleaning process was to create a categorical variable f
 
 This plot shows how the calories in recipes are distributed across the dataset. The data is skewed right, with the vast majority of recipes being under 1000 calories.
 ### Bivariate Analysis
+<iframe src="assets/calories-ratings-boxplot.html" width=1000 height=600 frameBorder=0></iframe>
+
+This plot shows the distribution of calories by rating group, visualized as boxplots. The two boxplots are fairly similar, although the center of the 3.0-5.0 rating boxplot is slightly higher.
+
 
 ### Interesting Aggregates
+| avg_rating_categorized   |     id |   minutes |   contributor_id |   n_steps |   n_ingredients |     user_id |   recipe_id |   rating_x |   avg_rating |   calories |   ratings_missing |
+|:-------------------------|-------:|----------:|-----------------:|----------:|----------------:|------------:|------------:|-----------:|-------------:|-----------:|------------------:|
+| 1.0-2.9                  | 389379 |   96.9893 |      2.91427e+07 |   10.5306 |         9.11309 | 3.33548e+08 |      389379 |    1.68134 |      1.64404 |    424.777 |         0.0469417 |
+| 3.0-5.0                  | 380570 |  111.442  |      1.28254e+07 |   10.0361 |         9.20381 | 6.73688e+07 |      380570 |    4.70419 |      4.67806 |    407.263 |         0.0164895 | 
+This DataFrame is the result of grouping recipes by rating category and taking the mean of the numeric columns. The main columns of interest in this resulting table are 'calories' and 'ratings_missing'. The 'calories' column shows the center of each rating group, with the 3.0-5.0 group having about 18 more average calories. The 'ratings_missing' column shows the percentage of each group missing a rating.
+
 ---
 
 ## Assessment of Missingness
 
+In the original merged DataFrame, there are three columns with missing values: 'description', 'rating', and 'review'. 
+
 ### NMAR Analysis
+When looking if any of the columns with missing values are NMAR, none of the columns, except 'review', qualify as so. The value of the 'description' column cannot be determined by looking at other columns, but there is no reason for the missingness to depend on the actual description values. It ultimately depends on the user deciding whether or not to create a description, which is not tracked by other columns in the dataset. 
+
+For the 'rating' column, it would make sense for more neutral ratings to be missing, since people tend to review things they have a strong opinion about. However, there are many reviews without a rating, which goes against this idea. 
+
+The 'review' column most likely NMAR, as more neutral reviews would be more likely to be missing. Recording the satisfaction level of users that tried the recipe would be able to explain the missingness in this scenario.
+
 
 ### Missingness Dependency
+
+After concluding that the 'rating' column was not NMAR, I decided to see what columns its missingness depended on. From running permutation tests that used the absolute difference of means as the test statistic, I found that the missingness does likely depend on 'calories' and does not depend on 'minutes'. 
+
+The permutation test for missingness on minutes had a p-value of 0.116, meaning that 'ratings' likely does not depend on 'minutes'. Below is the empirical distribution of the absolute difference of means for means from 1000 permutations. 
+
+<iframe src="assets/diffs-plot.html" width=1000 height=600 frameBorder=0></iframe>
+
+The permutation test for missingness of 'ratings' on 'calories' had a p-value of 0.0, meaning that 'rating' like does depend on 'calories'. This poses a problem for my research question, as I am looking at the relationship between 'calories' and a column derived from 'rating'. Probabilistic imputation would ideally be the best solution to this, but since 'calories' is not a categorical column, it cannot be done. Instead, rows with a missing value for 'avg_rating' will not be factored into the hypothesis testing, which will put an asterik on the results of the testing.
+
 ---
 
 ## Hypothesis Testing
